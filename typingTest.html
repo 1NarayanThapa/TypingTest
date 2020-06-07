@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@100&display=swap" rel="stylesheet">
+    <style>
+        * {
+            padding: 0;
+            margin: 10;
+            box-sizing: border-box;
+            font-family: 'Josefin Sans', sans-serif;
+        }
+
+        .mainDiv {
+            width: 100%;
+            height: 100vh;
+            position: relative;
+            background: #3498db;
+        }
+
+        .centerDiv {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+    h1{
+        text-transform: capitalize;
+        margin-bottom: 30px;
+        color:#ecf0f1;
+        text-shadow: 1px 2px 3px #2980b9;
+        font-size: 2.1rem;
+      
+    }
+    h2{
+        text-align: center;
+
+    }
+    textarea{
+        background-color:#444;
+        box-shadow: 0,0,1px rgba(0,0,0,0.2);
+        border-radius:10px 10px 0 0;
+        border:20px solid #34495e;
+        color:white;
+        font-size: 1.3rem;
+    }
+    .mainbtn{
+        padding:10px 20px ;
+        border-radius:20px;
+        border:5px solid #2980;
+        background: #ecf0f1;
+        font-size:1rem;
+    }
+        
+        
+    </style>
+
+
+</head>
+
+<body>
+    <div class="mainDiv">
+        <div class="centerDiv">
+            <h1>welcome to type speed test</h1>
+            <h2 id="msg"></h2>
+            <textarea id="mywords" cols="100" rows="10" placeholder="enter the text"></textarea>
+            <br>
+            <button id="btn" class="mainbtn">Start</button>
+
+
+        </div>
+
+    </div>
+
+</body>
+<script>
+    const setOfWords=["my name is narayan thapa","i am a csit student","i want to be a software engineer"];
+    const mymsg=document.getElementById("msg");
+    const typedWords=document.getElementById("mywords");
+    const btn=document.getElementById("btn");
+    let statTime,endTime;
+    function playGame(){
+        let randomNumber=Math.floor(Math.random()*setOfWords.length);
+         mymsg.innerText=setOfWords[randomNumber];
+         let date=new Date();
+         statTime=date.getTime();
+          btn.innerText="Done";}
+          function endPlay(){
+              let date=new Date()
+              endTime=date.getTime()
+              let totalTime=((endTime-statTime)/1000);
+              console.log("total time is:"+totalTime)
+            let totalStr=typedWords.value;
+            let wordCount=wordCounter(totalStr);
+            let speed =Math.round((wordCount/totalTime)*100);
+            finalMsg="your speed is :"+speed+ " words per minute ";
+            finalMsg+=compareWords(mymsg.innerText,totalStr);
+            mymsg.innerText=finalMsg;}
+        function compareWords(str1,str2){
+            let words1=str1.split(" ");
+            let words2=str2.split(" ");
+            let cnt=0;
+        
+        
+        words1.forEach(function(item, index){
+            if(item==words2[index]){
+            cnt++;}
+        });
+        let errorWords=(words1.length-cnt);
+        return(cnt+" correct out of "+words1.length+"     words and the total number of error are "+ errorWords+".");}
+
+        
+           
+
+          
+          function wordCounter(str){
+              let response=str.split(" ").length;
+              console.log("total word is:"+response);
+              return response;
+          }
+       
+        
+    
+    btn.addEventListener("click",function(){
+        if(this.innerHTML=='Start'){
+            typedWords.disabled=false;
+            playGame(); 
+        }else if(this.innerText=="Done"){
+            typedWords.disabled=true;
+            btn.innerText="Start";
+            endPlay();
+
+            
+        }
+    })
+</script>
+
+</html>
